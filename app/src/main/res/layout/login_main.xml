@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@drawable/login_background">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@color/theme_color_common_section">
+            <TextView
+                    android:text="手机号码登陆"
+                    android:id="@+id/text_title"
+                    android:textSize="18sp"
+                    android:textColor="@color/gray"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            <Button
+                    android:id="@+id/back_button"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/gray"
+                    android:drawablePadding="6dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:background="@drawable/back"
+            />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal">
+
+        <EditText
+                android:id="@+id/loginPhoneNum"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColor="@color/darkgray"
+                android:inputType="phone"
+                android:hint="请输入手机号"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+    >
+
+        <EditText
+                android:id="@+id/loginPassword"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkgray"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:hint="请输入密码"
+        />
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/login_main_button"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_button_background"
+            android:text="登录"
+            android:textSize="18sp"
+            android:textColor="@color/gray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="false"
+            android:layout_width="320dp"/>
+</LinearLayout>

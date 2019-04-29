@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/playList">
+
+    <TextView
+            android:id="@+id/item_type"
+            android:textSize="16dp"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="1dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" android:layout_marginStart="14dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toTopOf="@+id/mySongListPicture"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <ImageView
+            android:id="@+id/mySongListPicture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/login_background" android:layout_marginBottom="8dp"/>
+
+
+    <TextView
+            android:id="@+id/mySongListName"
+            android:singleLine="true"
+            app:layout_constraintStart_toEndOf="@id/mySongListPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintTop_toTopOf="@+id/mySongListPicture"
+            android:text="我喜欢的音乐" android:layout_marginTop="8dp"/>
+    <TextView
+            android:id="@+id/mySongListSongNum"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/mySongListPicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="305dp" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginStart="13dp"
+            android:layout_marginVertical="10dp" app:layout_constraintTop_toBottomOf="@+id/mySongListName"
+            android:layout_marginTop="1dp"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/mySongListPicture" android:text="335首， by Alpaca_可期"
+            app:layout_constraintVertical_bias="0.652"/>
+
+
+</android.support.constraint.ConstraintLayout>
