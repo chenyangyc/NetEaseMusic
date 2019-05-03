@@ -24,6 +24,9 @@
         <activity android:name=".view.LoginActivity"/>
         <activity android:name=".view.PlayListInfoActivity"/>
         <activity android:name=".view.MusicPlayActivity"/>
+        <service android:name=".view.MusicPlayService"
+                 android:exported="true">
+        </service>
     </application>
 
 </manifest>

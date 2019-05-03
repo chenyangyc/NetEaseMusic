@@ -1,20 +1,16 @@
 package com.example.neteasecloudmusic.view
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import com.example.a.zhihu.MyMusicPageAdapter
 import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.GetPlayListStatus
-import com.example.neteasecloudmusic.model.MyPlayListBean
 import com.example.neteasecloudmusic.model.PlayListDetailBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.example.neteasecloudmusic.presenter.ListDetailAdapter
 import com.orhanobut.hawk.Hawk
-import kotlinx.android.synthetic.main.play_list_info.*
 import kotlinx.coroutines.android.UI
 import kotlinx.coroutines.launch
 
