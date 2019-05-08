@@ -7,6 +7,10 @@ import android.os.Binder
 import android.os.IBinder
 
 class MusicPlayService :Service(){
+    private var playList: ArrayList<String?> = ArrayList()
+    private var id: String? = ""
+    private var url: String? = ""
+    private var position = -1
 
     //  通过 Binder 来保持 Activity 和 Service 的通信
     var binder = MyBinder()
@@ -15,19 +19,42 @@ class MusicPlayService :Service(){
         return binder
     }
 
-    var mediaPlayer: MediaPlayer? = null
-    var tag = false
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-    init {
-        mediaPlayer = MediaPlayer()
-        try {
-            mediaPlayer!!.setDataSource("/data/music.mp3")
-            mediaPlayer!!.prepare()
-            mediaPlayer!!.setLooping(true)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        id = intent?.getStringExtra("url")
+
+        if (id != null) {
+            play(id)
+            mediaPlayer?.setOnErrorListener { _, _, _ ->
+                play(id)
+                false
+            }
         }
+        return super.onStartCommand(intent, flags, startId)
+    }
 
+    var mediaPlayer: MediaPlayer? = null
+
+    fun play(url: String?): Boolean {
+        when (mediaPlayer) {
+            null -> mediaPlayer = MediaPlayer()
+        }
+        mediaPlayer?.let {
+            it.reset()
+            try {
+                it.setDataSource(url)
+                it.prepare()
+                it.start()
+                if (!playList.contains(url)) {
+                    playList.add(url)
+                    position++
+                }
+                return true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return false
     }
 
     inner class MyBinder : Binder() {
@@ -36,24 +63,13 @@ class MusicPlayService :Service(){
     }
 
     fun playOrPause() {
-        if (mediaPlayer!!.isPlaying()) {
-            mediaPlayer!!.pause()
-        } else {
-            mediaPlayer!!.start()
-        }
-    }
-
-    fun stop() {
-        if (mediaPlayer != null) {
-            mediaPlayer!!.stop()
-            try {
-                mediaPlayer!!.reset()
-                mediaPlayer!!.setDataSource("/data/music.mp3")
-                mediaPlayer!!.prepare()
-                mediaPlayer!!.seekTo(0)
-            } catch (e: Exception) {
-                e.printStackTrace()
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.pause()
+            } else {
+                it.start()
             }
         }
     }
+
 }

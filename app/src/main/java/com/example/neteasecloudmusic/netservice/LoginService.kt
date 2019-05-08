@@ -30,49 +30,97 @@ object LoginService {
         }
     }
 
-    fun getPlayList(userId: Int, back: (GetPlayListStatus, MyPlayListBean?) -> (Unit)) {
+    fun getPlayList(userId: Int, back: (Status, MyPlayListBean?) -> (Unit)) {
         val call = NetService.getPlayList(userId)
         launch {
             try {
                 val getPlayListBean = call.execute().body()
                 if (getPlayListBean == null)
-                    back(GetPlayListStatus.UNMATCHED, null)
+                    back(Status.UNMATCHED, null)
                 else
-                    back(GetPlayListStatus.SUCCESS, getPlayListBean)
+                    back(Status.SUCCESS, getPlayListBean)
             } catch (e: Exception) {
                 e.printStackTrace()
-                back(GetPlayListStatus.ERROR, null)
+                back(Status.ERROR, null)
             }
         }
     }
 
-    fun getPlayListDetail(listId: String, back: (GetPlayListStatus, PlayListDetailBean?) -> (Unit)) {
+    fun getPlayListDetail(listId: String, back: (Status, PlayListDetailBean?) -> (Unit)) {
         val call = NetService.getPlayListDetail(listId)
         launch {
             try {
                 val playListDetailBean = call.execute().body()
                 if (playListDetailBean == null)
-                    back(GetPlayListStatus.UNMATCHED, null)
+                    back(Status.UNMATCHED, null)
                 else
-                    back(GetPlayListStatus.SUCCESS, playListDetailBean)
+                    back(Status.SUCCESS, playListDetailBean)
             } catch (e: Exception) {
                 e.printStackTrace()
-                back(GetPlayListStatus.ERROR, null)
+                back(Status.ERROR, null)
             }
         }
     }
 
-    fun getSongDetail(songId: String, back: (GetPlayListStatus, SongDetailBean?) -> (Unit)) {
+    fun getSongDetail(songId: String, back: (Status, SongDetailBean?) -> (Unit)) {
         val call = NetService.getSongDetail(songId)
         launch {
             try {
                 val songDetailBean = call.execute().body()
                 if(songDetailBean == null)
-                    back(GetPlayListStatus.UNMATCHED, null)
+                    back(Status.UNMATCHED, null)
                 else
-                    back(GetPlayListStatus.SUCCESS,songDetailBean)
+                    back(Status.SUCCESS,songDetailBean)
             } catch(e:Exception) {
-                back(GetPlayListStatus.ERROR,null)
+                back(Status.ERROR,null)
+            }
+        }
+    }
+
+    fun getMusicURL(id: String?, MusicData: (Status, MusicBean?) -> (Unit)) {
+        val call = NetService.getMusicURL(id)
+        launch {
+            try {
+                val musicBean = call.execute().body()
+                if (musicBean == null)
+                    MusicData(Status.UNMATCHED, null)
+                else
+                    MusicData(Status.SUCCESS, musicBean)
+            } catch (e: Exception) {
+                MusicData(Status.ERROR, null)
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun checkMusic(id: String, checkData: (Status, CheckMusicBean?) -> (Unit)) {
+        val call = NetService.checkMusic(id)
+        launch {
+            try {
+                val checkBean = call.execute().body()
+                if (checkBean == null)
+                    checkData(Status.UNMATCHED, null)
+                else
+                    checkData(Status.SUCCESS, checkBean)
+            } catch (e: Exception) {
+                checkData(Status.ERROR, null)
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun getMusicDetail(ids: String, checkData: (Status, SongDetailBean?) -> (Unit)) {
+        val call = NetService.getMusicDetail(ids)
+        launch {
+            try {
+                val songDetailBean = call.execute().body()
+                if (songDetailBean == null)
+                    checkData(Status.UNMATCHED, null)
+                else
+                    checkData(Status.SUCCESS, songDetailBean)
+            } catch (e: Exception) {
+                checkData(Status.ERROR, null)
+                e.printStackTrace()
             }
         }
     }

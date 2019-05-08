@@ -10,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.example.a.zhihu.MyMusicPageAdapter
-import com.example.neteasecloudmusic.model.GetPlayListStatus
+import com.example.neteasecloudmusic.model.Status
 import com.example.neteasecloudmusic.model.MyPlayListBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.orhanobut.hawk.Hawk
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         LoginService.getPlayList(sharedPreferences.getInt("id",0)){ status, data ->
             launch(UI) {
                 when(status) {
-                    GetPlayListStatus.SUCCESS-> {
+                    Status.SUCCESS-> {
                         Hawk.put("data",data)
                         songListBean = Hawk.get("data")
                         myMusicPageAdapter = MyMusicPageAdapter(this@MainActivity,songListBean)
@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
                         recyclerView.layoutManager = layoutManager
                         recyclerView.adapter = myMusicPageAdapter
                     }
-                    GetPlayListStatus.ERROR-> {
+                    Status.ERROR-> {
                     Toast.makeText(this@MainActivity,"ERROR",Toast.LENGTH_SHORT)
                     }
-                    GetPlayListStatus.UNMATCHED-> {
+                    Status.UNMATCHED-> {
                     Toast.makeText(this@MainActivity,"UNMATCHED",Toast.LENGTH_SHORT)
                     }
                 }

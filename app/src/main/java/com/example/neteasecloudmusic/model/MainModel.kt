@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 object MainModel {
 
-    private const val BASE_URL = "http://10.0.2.2:3000"
+    private const val BASE_URL = "http://10.0.2.2:3000"  //http://192.168.1.150 http://10.0.2.2:3000  http:// 192.168.137.1
     private val client = OkHttpClient
         .Builder()
         .connectTimeout(5, TimeUnit.SECONDS)

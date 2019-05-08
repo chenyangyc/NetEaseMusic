@@ -24,5 +24,14 @@ interface NetService {
     @GET("/song/detail")
     fun getSongDetail(@Query("ids") songId: String): Call<SongDetailBean>
 
+    @GET("/song/url")
+    fun getMusicURL(@Query("id") id: String?): Call<MusicBean>
+
+    @GET("/check/music")
+    fun checkMusic(@Query("id") id: String?): Call<CheckMusicBean>
+
+    @GET("/song/detail?")
+    fun getMusicDetail(@Query("ids") ids: String?): Call<SongDetailBean>
+
     companion object : NetService by MainModel()
 }

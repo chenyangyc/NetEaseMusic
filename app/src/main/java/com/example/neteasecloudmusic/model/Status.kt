@@ -1,6 +1,6 @@
 package com.example.neteasecloudmusic.model
 
-enum class GetPlayListStatus {
+enum class Status {
     SUCCESS,
     ERROR,
     UNMATCHED

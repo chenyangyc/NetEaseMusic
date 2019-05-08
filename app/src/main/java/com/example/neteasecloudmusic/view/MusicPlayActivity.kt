@@ -1,18 +1,15 @@
 package com.example.neteasecloudmusic.view
 
-import android.animation.ObjectAnimator
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.animation.LinearInterpolator
-import android.widget.Button
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.neteasecloudmusic.R
-import com.example.neteasecloudmusic.model.GetPlayListStatus
+import com.example.neteasecloudmusic.model.Status
 import com.example.neteasecloudmusic.model.SongDetailBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.orhanobut.hawk.Hawk
@@ -22,6 +19,8 @@ import kotlinx.coroutines.launch
 
 class MusicPlayActivity : AppCompatActivity() {
     internal lateinit var id: String
+    internal var name: String? = null
+    private var artist: String? = null
     private var songDetail = SongDetailBean()
 
     private var musicPlayService: MusicPlayService ? = null
@@ -38,6 +37,8 @@ class MusicPlayActivity : AppCompatActivity() {
         val b = i.extras
         if (b != null) {
             id = b.getString("id")
+            name = b.getString("name")
+            artist = b.getString("artist")
         }
 
         Hawk.init(this)
@@ -45,8 +46,7 @@ class MusicPlayActivity : AppCompatActivity() {
 
         initLayout()
 
-        bindServiceConnection()
-        myListener()
+        getMusicPlayed(id)
     }
 
     //  回调onServiceConnected 函数，通过IBinder 获取 Service对象，实现Activity与 Service的绑定
@@ -60,55 +60,67 @@ class MusicPlayActivity : AppCompatActivity() {
         }
     }
 
-    //  在Activity中调用 bindService 保持与 Service 的通信
-    private fun bindServiceConnection() {
+    private fun PlayMusic(){
         val intent = Intent(this@MusicPlayActivity, MusicPlayService::class.java)
-        val bundle = Bundle()
-        bundle.putString("id", id)
-        intent.putExtras(bundle)
-        startService(intent)
-        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+        val url = Hawk.get("musicurl$id", "")
+        if (url != "") {
+            intent.putExtra("url", url)
+            startService(intent)
+            bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+//            rotateView.play()
+        } else {
+            Toast.makeText(this, "获取歌曲url过程中出现了问题", Toast.LENGTH_SHORT)
+        }
+    }
+
+    private fun getMusicPlayed(id: String?) {
+        LoginService.getMusicURL(id) { status, data ->
+            launch(UI) {
+                when (status) {
+                    Status.SUCCESS -> {
+                        Hawk.put("musicurl$id", data?.data?.get(0)?.url)
+                        Toast.makeText(
+                            this@MusicPlayActivity,
+                            "成功获取歌曲",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        PlayMusic()
+                        myListener()
+                    }
+                    Status.UNMATCHED -> Toast.makeText(
+                        this@MusicPlayActivity,
+                        "未获取歌曲详情",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    else -> Toast.makeText(
+                        this@MusicPlayActivity,
+                        "出现了问题T_T  $id",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun myListener(){
         play_button.setOnClickListener {
+            musicPlayService?.let {
+                it.playOrPause()
+            }
+        }
 
 //            val animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360.0f)
 //            animator.duration = 10000
 //            animator.interpolator = LinearInterpolator()
 //            animator.repeatCount = -1
-            //  由tag的变换来控制事件的调用
-            if (musicPlayService!!.tag !== true) {
-                play_button.text = "PAUSE"
-                play_button.text = "Playing"
-                musicPlayService!!.playOrPause()
-                musicPlayService!!.tag = true
 
-                if (tag1 == false) {
-//                    animator.start()
-                    tag1 = true
-                } else {
-//                    animator.resume()
-                }
-            } else {
-                play_button.text = "PLAY"
-                play_button.text = "Paused"
-                musicPlayService!!.playOrPause()
-//                animator.pause()
-                musicPlayService!!.tag = false
-            }
-            if (tag2 == false) {
-//                handler.post(runnable)
-                tag2 = true
-            }
-        }
 
-        stop_button.setOnClickListener {
-            play_button.text = "PLAY"
-            musicPlayService!!.stop()
-//            animator.pause()
-            musicPlayService!!.tag = false
-        }
+//        stop_button.setOnClickListener {
+//            play_button.text = "PLAY"
+//            musicPlayService!!.stop()
+////            animator.pause()
+//            musicPlayService!!.tag = false
+//        }
 
     }
 
@@ -116,16 +128,21 @@ class MusicPlayActivity : AppCompatActivity() {
         LoginService.getSongDetail(id) { status, data ->
             launch(UI){
                 when(status) {
-                    GetPlayListStatus.SUCCESS-> {
+                    Status.SUCCESS-> {
                         Hawk.put("data",data)
+                        Hawk.put("musicpic$id", data?.songs?.get(0)?.al?.picUrl)
+                        val pic = Hawk.get("musicpic$id", "")
+//                        Glide.with(this@MusicPlayActivity)
+//                            .load(pic)
+//                            .into(rotateView)
                         songDetail = Hawk.get("data")
-                        songName.text = songDetail.songs?.get(0)?.name
-                        singerName.text = songDetail.songs?.get(0)?.ar?.get(0)?.name
+                        songName.text = name
+                        singerName.text = artist
                     }
-                    GetPlayListStatus.ERROR-> {
+                    Status.ERROR-> {
                         Toast.makeText(this@MusicPlayActivity,"ERROR", Toast.LENGTH_SHORT)
                     }
-                    GetPlayListStatus.UNMATCHED-> {
+                    Status.UNMATCHED-> {
                         Toast.makeText(this@MusicPlayActivity,"UNMATCHED", Toast.LENGTH_SHORT)
                     }
                 }

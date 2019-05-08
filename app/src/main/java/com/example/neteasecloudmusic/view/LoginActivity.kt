@@ -36,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
                                     loginPhoneNum.text.toString(),
                                     loginPassword.text.toString()
                                 )
-
                                 startActivity<MainActivity>()
                                 finish()
                             }

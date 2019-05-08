@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.example.neteasecloudmusic.R
-import com.example.neteasecloudmusic.model.GetPlayListStatus
+import com.example.neteasecloudmusic.model.Status
 import com.example.neteasecloudmusic.model.PlayListDetailBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.example.neteasecloudmusic.presenter.ListDetailAdapter
@@ -41,7 +41,7 @@ class PlayListInfoActivity : AppCompatActivity() {
         LoginService.getPlayListDetail(id){status, data ->
             launch(UI) {
                 when(status) {
-                    GetPlayListStatus.SUCCESS-> {
+                    Status.SUCCESS-> {
                         Hawk.put("data",data)
                         playListDetailBean = Hawk.get("data")
                         listDetailAdapter = ListDetailAdapter(this@PlayListInfoActivity,playListDetailBean)
@@ -51,10 +51,10 @@ class PlayListInfoActivity : AppCompatActivity() {
                         recyclerView.layoutManager = layoutManager
                         recyclerView.adapter = listDetailAdapter
                     }
-                    GetPlayListStatus.ERROR-> {
+                    Status.ERROR-> {
                         Toast.makeText(this@PlayListInfoActivity,"ERROR", Toast.LENGTH_SHORT)
                     }
-                    GetPlayListStatus.UNMATCHED-> {
+                    Status.UNMATCHED-> {
                         Toast.makeText(this@PlayListInfoActivity,"UNMATCHED", Toast.LENGTH_SHORT)
                     }
                 }

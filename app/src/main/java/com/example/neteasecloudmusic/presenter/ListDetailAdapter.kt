@@ -61,6 +61,8 @@ class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : Re
                             val intent = Intent(context, MusicPlayActivity::class.java)
                             val bundle = Bundle()
                             bundle.putString("id", songListDetail.playlist?.tracks?.get(p1 - 1)?.id.toString() )
+                            bundle.putString("name", songListDetail.playlist?.tracks?.get(p1 - 1)?.name)
+                            bundle.putString("artist", songListDetail.playlist?.tracks?.get(p1 - 1)?.ar?.get(0)?.name.toString() )
                             intent.putExtras(bundle)
                             context.startActivity(intent)
                         }
