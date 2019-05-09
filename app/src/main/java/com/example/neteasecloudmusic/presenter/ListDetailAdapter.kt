@@ -10,10 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.PlayListDetailBean
 import com.example.neteasecloudmusic.view.MusicPlayActivity
 import com.squareup.picasso.Picasso
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val BANNER_TYPE = 0
@@ -36,11 +39,22 @@ class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : Re
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
         when(p0) {
             is DetailHeaderHolder -> {
-                Picasso.with(context)
+                Glide.with(context)
                     .load(songListDetail.playlist?.coverImgUrl)
-                    .fit()
-                    .centerCrop()
+                    .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(20, 0, RoundedCornersTransformation.CornerType.ALL)))
                     .into(p0.listCover)
+
+                Glide.with(context)
+                    .load(songListDetail.playlist?.creator?.avatarUrl)
+                    .circleCrop()
+                    .into(p0.creatorIcon)
+//
+//                Picasso.with(context)
+//                    .load(songListDetail.playlist?.coverImgUrl)
+//                    .fit()
+//                    .centerCrop()
+//                    .into(p0.listCover)
+
                 p0.apply {
                     creator.text = songListDetail.playlist?.creator?.nickname
                     listName.text = songListDetail.playlist?.name
@@ -75,6 +89,7 @@ class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : Re
     inner class DetailHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var headerListName: TextView = itemView.findViewById(R.id.listName)
         var listCover: ImageView = itemView.findViewById(R.id.listCover)
+        var creatorIcon: ImageView = itemView.findViewById(R.id.creatorIcon)
         var creator: TextView = itemView.findViewById(R.id.creatorName)
         var listName:TextView = itemView.findViewById(R.id.songListName)
     }

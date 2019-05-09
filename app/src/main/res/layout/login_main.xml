@@ -12,6 +12,7 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/theme_color_common_section">
             <TextView
                     android:text="手机号码登陆"

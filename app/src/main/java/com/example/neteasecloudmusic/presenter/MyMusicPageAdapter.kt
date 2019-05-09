@@ -2,10 +2,8 @@ package com.example.a.zhihu
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +11,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.MyPlayListBean
-import com.example.neteasecloudmusic.view.MainActivity
 import com.example.neteasecloudmusic.view.PlayListInfoActivity
 import com.squareup.picasso.Picasso
+import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 
 class MyMusicPageAdapter(var context: Context, mainBean: MyPlayListBean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -65,11 +66,18 @@ class MyMusicPageAdapter(var context: Context, mainBean: MyPlayListBean) : Recyc
                             context.startActivity(intent)
                         }
                     }
-                    Picasso.with(context)
+
+
+                    Glide.with(context)
                         .load(songList!!.playlist!![p1 - 1].coverImgUrl)
-                        .fit()
-                        .centerCrop()
+                        .apply(bitmapTransform(RoundedCornersTransformation(20,0,RoundedCornersTransformation.CornerType.ALL)))
                         .into(p0.coverImg)
+
+//                    Picasso.with(context)
+//                        .load(songList!!.playlist!![p1 - 1].coverImgUrl)
+//                        .fit()
+//                        .centerCrop()
+//                        .into(p0.coverImg)
                 }
             }
         }

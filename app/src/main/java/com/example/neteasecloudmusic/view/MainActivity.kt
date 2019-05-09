@@ -5,9 +5,11 @@ import android.content.Context
 import com.example.neteasecloudmusic.R
 import org.jetbrains.anko.startActivity
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.Toast
 import com.example.a.zhihu.MyMusicPageAdapter
 import com.example.neteasecloudmusic.model.Status
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.statusBarColor = Color.TRANSPARENT
         supportActionBar?.hide()
 
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE)

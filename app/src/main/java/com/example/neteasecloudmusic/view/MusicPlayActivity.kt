@@ -9,18 +9,22 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.Status
 import com.example.neteasecloudmusic.model.SongDetailBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.orhanobut.hawk.Hawk
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.music_play_layout.*
 import kotlinx.coroutines.android.UI
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class MusicPlayActivity : AppCompatActivity() {
     internal lateinit var id: String
@@ -34,6 +38,9 @@ class MusicPlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_play_layout)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.statusBarColor = Color.TRANSPARENT
+
         supportActionBar?.hide()
 
         val i = intent
@@ -171,11 +178,18 @@ class MusicPlayActivity : AppCompatActivity() {
                         Glide.with(this@MusicPlayActivity)
                             .load(picture)
                             .into(circle_rotate_view)
+
+
+                        Glide.with(this@MusicPlayActivity)
+                            .load(picture)
+                            .apply(RequestOptions.bitmapTransform(BlurTransformation(80,5)))
+                            .into(music_play_background)
+
                         songDetail = Hawk.get("data")
                         songName.text = name
                         singerName.text = artist
-                        seek_bar.getThumb().setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_ATOP)
-                        seek_bar.getProgressDrawable().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+                        seek_bar.getThumb().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP)
+                        seek_bar.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
                     }
                     Status.ERROR-> {
                         Toast.makeText(this@MusicPlayActivity,"ERROR", Toast.LENGTH_SHORT)

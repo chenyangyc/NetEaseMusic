@@ -5,36 +5,37 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
+    <ImageView
+            android:id="@+id/music_play_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:alpha="0.7"
+    />
+
     <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="65dp" android:id="@+id/constraintLayout">
 
         <TextView
                 android:id="@+id/songName"
+                android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp" android:layout_marginTop="15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-                android:id="@+id/back_to_song_list"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:gravity="center"
-                android:onClick="onClick"
-                android:background="@drawable/cloud"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
         <TextView
                 android:layout_width="wrap_content"
+                android:textColor="@color/white"
                 android:layout_height="wrap_content" android:id="@+id/singerName"
                 android:layout_below="@+id/songName"
                 android:layout_alignEnd="@+id/songName" android:layout_alignParentStart="true"
@@ -52,27 +53,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/gray"
+            android:textColor="@color/darkgray"
             android:id="@+id/play_button" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/seek_bar" app:layout_constraintVertical_bias="0.869"/>
+
+    <com.example.neteasecloudmusic.view.CircleRotateView
+            android:layout_width="310dp"
+            android:layout_height="310dp" app:srcCompat="@drawable/album"
+            android:id="@+id/album" android:layout_marginTop="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/music_play_background"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="10dp"
+            app:layout_constraintVertical_bias="0.235" app:layout_constraintHorizontal_bias="0.481"/>
 
     <com.example.neteasecloudmusic.view.CircleRotateView
             android:id="@+id/circle_rotate_view"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="132dp"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
-
+            android:layout_marginTop="160dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" app:layout_constraintHorizontal_bias="0.497"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:id="@+id/musicTime" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/seek_bar"
             app:layout_constraintBottom_toBottomOf="@+id/seek_bar" app:layout_constraintTop_toTopOf="@+id/seek_bar"
@@ -80,6 +94,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:id="@+id/musicTotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/seek_bar" app:layout_constraintTop_toTopOf="@+id/seek_bar"
@@ -95,5 +110,6 @@
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/circle_rotate_view"
             />
+
 
 </android.support.constraint.ConstraintLayout>
