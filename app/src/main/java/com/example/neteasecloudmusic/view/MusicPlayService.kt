@@ -11,18 +11,23 @@ class MusicPlayService :Service(){
     private var id: String? = ""
     private var url: String? = ""
     private var position = -1
+    var mediaPlayer: MediaPlayer? = null
+    var tag : Boolean ?= true
 
     //  通过 Binder 来保持 Activity 和 Service 的通信
     var binder = MyBinder()
+
+    inner class MyBinder : Binder() {
+        internal val service: MusicPlayService
+            get() = this@MusicPlayService
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return binder
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         id = intent?.getStringExtra("url")
-
         if (id != null) {
             play(id)
             mediaPlayer?.setOnErrorListener { _, _, _ ->
@@ -32,8 +37,6 @@ class MusicPlayService :Service(){
         }
         return super.onStartCommand(intent, flags, startId)
     }
-
-    var mediaPlayer: MediaPlayer? = null
 
     fun play(url: String?): Boolean {
         when (mediaPlayer) {
@@ -57,19 +60,15 @@ class MusicPlayService :Service(){
         return false
     }
 
-    inner class MyBinder : Binder() {
-        internal val service: MusicPlayService
-            get() = this@MusicPlayService
-    }
-
     fun playOrPause() {
         mediaPlayer?.let {
             if (it.isPlaying) {
                 it.pause()
+                tag = true
             } else {
                 it.start()
+                tag = false
             }
         }
     }
-
 }
