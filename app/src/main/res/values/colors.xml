@@ -11,5 +11,7 @@
     <color name="darkgray">#808080</color>
     <color name="themeColor">#ffce3d3a</color>
     <color name="smallRed">#faebeb</color>
-    <color name="theme_color_common_section">#ffe6e8e9</color>
+    <color name="theme_color_common_section">#ffe6e8e9 </color>
+    <color name="nightsilver">#778899
+    </color>
 </resources>

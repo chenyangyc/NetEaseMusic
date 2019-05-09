@@ -9,7 +9,6 @@ import android.os.IBinder
 class MusicPlayService :Service(){
     private var playList: ArrayList<String?> = ArrayList()
     private var id: String? = ""
-    private var url: String? = ""
     private var position = -1
     var mediaPlayer: MediaPlayer? = null
     var tag : Boolean ?= true
