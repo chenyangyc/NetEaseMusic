@@ -3,16 +3,24 @@ package com.example.neteasecloudmusic.view
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.menu.MenuView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.Status
 import com.example.neteasecloudmusic.model.PlayListDetailBean
 import com.example.neteasecloudmusic.netservice.LoginService
 import com.example.neteasecloudmusic.presenter.ListDetailAdapter
 import com.orhanobut.hawk.Hawk
+import jp.wasabeef.glide.transformations.BlurTransformation
+import kotlinx.android.synthetic.main.music_play_layout.*
+import kotlinx.android.synthetic.main.play_list_info.*
+import kotlinx.android.synthetic.main.play_list_info_header.*
 import kotlinx.coroutines.android.UI
 import kotlinx.coroutines.launch
 
@@ -55,6 +63,7 @@ class PlayListInfoActivity : AppCompatActivity() {
                         recyclerView.layoutManager = layoutManager
                         recyclerView.adapter = listDetailAdapter
                     }
+
                     Status.ERROR-> {
                         Toast.makeText(this@PlayListInfoActivity,"ERROR", Toast.LENGTH_SHORT)
                     }

@@ -182,7 +182,7 @@ class MusicPlayActivity : AppCompatActivity() {
 
                         Glide.with(this@MusicPlayActivity)
                             .load(picture)
-                            .apply(RequestOptions.bitmapTransform(BlurTransformation(80,5)))
+                            .apply(RequestOptions.bitmapTransform(BlurTransformation(70,4)))
                             .into(music_play_background)
 
                         songDetail = Hawk.get("data")

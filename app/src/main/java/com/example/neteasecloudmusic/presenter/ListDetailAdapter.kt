@@ -3,6 +3,7 @@ package com.example.neteasecloudmusic.presenter
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,7 +17,9 @@ import com.example.neteasecloudmusic.R
 import com.example.neteasecloudmusic.model.PlayListDetailBean
 import com.example.neteasecloudmusic.view.MusicPlayActivity
 import com.squareup.picasso.Picasso
+import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import kotlinx.android.synthetic.main.play_list_info_header.*
 
 class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val BANNER_TYPE = 0
@@ -45,15 +48,14 @@ class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : Re
                     .into(p0.listCover)
 
                 Glide.with(context)
+                    .load(songListDetail.playlist?.coverImgUrl)
+                    .apply(RequestOptions.bitmapTransform(BlurTransformation(70,2)))
+                    .into(p0.headerBackground)
+
+                Glide.with(context)
                     .load(songListDetail.playlist?.creator?.avatarUrl)
                     .circleCrop()
                     .into(p0.creatorIcon)
-//
-//                Picasso.with(context)
-//                    .load(songListDetail.playlist?.coverImgUrl)
-//                    .fit()
-//                    .centerCrop()
-//                    .into(p0.listCover)
 
                 p0.apply {
                     creator.text = songListDetail.playlist?.creator?.nickname
@@ -92,6 +94,7 @@ class ListDetailAdapter(var context: Context, mainBean: PlayListDetailBean) : Re
         var creatorIcon: ImageView = itemView.findViewById(R.id.creatorIcon)
         var creator: TextView = itemView.findViewById(R.id.creatorName)
         var listName:TextView = itemView.findViewById(R.id.songListName)
+        var headerBackground: ImageView = itemView.findViewById(R.id.play_list_info_header_background)
     }
 
 

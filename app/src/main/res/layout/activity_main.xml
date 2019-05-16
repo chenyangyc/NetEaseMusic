@@ -21,11 +21,12 @@
 
         <Button
                 android:id="@+id/cloud_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:gravity="center"
+                android:layout_marginTop="12dp"
                 android:onClick="onClick"
-                android:background="@drawable/cloud"
+                android:background="@drawable/back"
         />
     </RelativeLayout>
 
